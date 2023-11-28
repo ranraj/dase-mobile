@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset Purchase</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{assetPurchase.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Purchase Date</ion-label>
+      <div item-content>
+        <span id="purchaseDate-content">{{assetPurchase.purchaseDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Amount</ion-label>
+      <div item-content>
+        <span id="amount-content">{{assetPurchase.amount}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Payment Date</ion-label>
+      <div item-content>
+        <span id="paymentDate-content">{{assetPurchase.paymentDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Payment Method</ion-label>
+      <div item-content>
+        <span id="paymentMethod-content">{{assetPurchase.paymentMethod}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Payment Reference</ion-label>
+      <div item-content>
+        <span id="paymentReference-content">{{assetPurchase.paymentReference}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Payment Status</ion-label>
+      <div item-content>
+        <span id="paymentStatus-content">{{assetPurchase.paymentStatus}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Vendor</ion-label>
+      <div item-content *ngIf="assetPurchase.vendor">
+        <a>{{assetPurchase.vendor?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(assetPurchase)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(assetPurchase)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

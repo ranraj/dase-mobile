@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Variation Branding</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" name="name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input type="text" name="description" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Price</ion-label>
+        <ion-input type="number" name="price" formControlName="price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Image Src</ion-label>
+        <ion-input type="text" name="imageSrc" formControlName="imageSrc"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Measurement</ion-label>
+        <ion-select formControlName="measurement" id="field_measurement">
+          <ion-select-option value="Weight">{{'ProductMeasurementType.Weight' | translate}}</ion-select-option>
+          <ion-select-option value="Size">{{'ProductMeasurementType.Size' | translate}}</ion-select-option>
+          <ion-select-option value="Litter">{{'ProductMeasurementType.Litter' | translate}}</ion-select-option>
+          <ion-select-option value="Count">{{'ProductMeasurementType.Count' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Measurement Unit</ion-label>
+        <ion-select formControlName="measurementUnit" id="field_measurementUnit">
+          <ion-select-option value="Gram">{{'MeasurementUnit.Gram' | translate}}</ion-select-option>
+          <ion-select-option value="Kilogram">{{'MeasurementUnit.Kilogram' | translate}}</ion-select-option>
+          <ion-select-option value="Litter">{{'MeasurementUnit.Litter' | translate}}</ion-select-option>
+          <ion-select-option value="Milli_litter">{{'MeasurementUnit.Milli_litter' | translate}}</ion-select-option>
+          <ion-select-option value="No">{{'MeasurementUnit.No' | translate}}</ion-select-option>
+          <ion-select-option value="S">{{'MeasurementUnit.S' | translate}}</ion-select-option>
+          <ion-select-option value="M">{{'MeasurementUnit.M' | translate}}</ion-select-option>
+          <ion-select-option value="L">{{'MeasurementUnit.L' | translate}}</ion-select-option>
+          <ion-select-option value="XL">{{'MeasurementUnit.XL' | translate}}</ion-select-option>
+          <ion-select-option value="XXL">{{'MeasurementUnit.XXL' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Discount Amount</ion-label>
+        <ion-input type="number" name="discountAmount" formControlName="discountAmount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Discount Percentage</ion-label>
+        <ion-input type="number" name="discountPercentage" formControlName="discountPercentage"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Product Variation</ion-label>
+        <ion-select id="field_productVariation" formControlName="productVariation" [compareWith]="compareProductVariation">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="productVariationOption"
+            *ngFor="let productVariationOption of productVariations; trackBy: trackProductVariationById"
+            >{{productVariationOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tax</ion-label>
+        <ion-select id="field_tax" formControlName="tax" [compareWith]="compareTax">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="taxOption" *ngFor="let taxOption of taxes; trackBy: trackTaxById">{{taxOption.id}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

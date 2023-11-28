@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset Maintenance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{assetMaintenance.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Service Running Time</ion-label>
+      <div item-content>
+        <span id="serviceRunningTime-content">{{assetMaintenance.serviceRunningTime}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Service Running Time Measurement</ion-label>
+      <div item-content>
+        <span id="serviceRunningTimeMeasurement-content">{{assetMaintenance.serviceRunningTimeMeasurement}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Rest Interval Time</ion-label>
+      <div item-content>
+        <span id="restIntervalTime-content">{{assetMaintenance.restIntervalTime}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Rest Interval Time Measurement</ion-label>
+      <div item-content>
+        <span id="restIntervalTimeMeasurement-content">{{assetMaintenance.restIntervalTimeMeasurement}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Next Service Date</ion-label>
+      <div item-content>
+        <span id="nextServiceDate-content">{{assetMaintenance.nextServiceDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(assetMaintenance)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(assetMaintenance)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

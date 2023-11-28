@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Attributes</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" name="name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Value</ion-label>
+        <ion-input type="text" name="value" formControlName="value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Comments</ion-label>
+        <ion-input type="text" name="comments" formControlName="comments"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Hidden</ion-label>
+        <ion-checkbox formControlName="hidden"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Internal</ion-label>
+        <ion-checkbox formControlName="internal"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Product</ion-label>
+        <ion-select id="field_product" formControlName="product" [compareWith]="compareProduct">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="productOption" *ngFor="let productOption of products; trackBy: trackProductById"
+            >{{productOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Product Branding</ion-label>
+        <ion-select id="field_productBranding" formControlName="productBranding" [compareWith]="compareProductBranding">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="productBrandingOption"
+            *ngFor="let productBrandingOption of productBrandings; trackBy: trackProductBrandingById"
+            >{{productBrandingOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Product Variation</ion-label>
+        <ion-select id="field_productVariation" formControlName="productVariation" [compareWith]="compareProductVariation">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="productVariationOption"
+            *ngFor="let productVariationOption of productVariations; trackBy: trackProductVariationById"
+            >{{productVariationOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Product Variation Branding</ion-label>
+        <ion-select
+          id="field_productVariationBranding"
+          formControlName="productVariationBranding"
+          [compareWith]="compareProductVariationBranding"
+        >
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="productVariationBrandingOption"
+            *ngFor="let productVariationBrandingOption of productVariationBrandings; trackBy: trackProductVariationBrandingById"
+            >{{productVariationBrandingOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

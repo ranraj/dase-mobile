@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Parties</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- todo: add elasticsearch support -->
+<ion-content class="ion-padding">
+  <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let party of parties; trackBy: trackId" #slidingItem>
+      <ion-item (click)="view(party)">
+        <ion-label text-wrap>
+          <p>{{party.id}}</p>
+          <ion-text color="primary"><h2>{{party.name}}</h2></ion-text>
+          <p>{{party.email}}</p>
+          <p>{{party.gstNo}}</p>
+          <p>{{party.phone}}</p>
+          <p>{{party.comments}}</p>
+          <!-- todo: special handling for translating enum - {{'PartyPrimaryType.' + party.primaryType}}" -->
+          <p>{{party.primaryType}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="edit(slidingItem, party)"> {{ 'EDIT_BUTTON' | translate }} </ion-item-option>
+        <ion-item-option color="danger" (click)="delete(party)"> {{ 'DELETE_BUTTON' | translate }} </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-item *ngIf="!parties?.length">
+    <ion-label> No Parties found. </ion-label>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

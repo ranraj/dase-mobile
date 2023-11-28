@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Party</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{party.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{party.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Email</ion-label>
+      <div item-content>
+        <span id="email-content">{{party.email}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Gst No</ion-label>
+      <div item-content>
+        <span id="gstNo-content">{{party.gstNo}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Phone</ion-label>
+      <div item-content>
+        <span id="phone-content">{{party.phone}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Comments</ion-label>
+      <div item-content>
+        <span id="comments-content">{{party.comments}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Primary Type</ion-label>
+      <div item-content>
+        <span id="primaryType-content">{{party.primaryType}}</span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(party)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(party)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

@@ -1,0 +1,308 @@
+
+application {
+  config {
+    baseName daseapp,
+    applicationType monolith,
+    packageName com.yali.dase,
+    authenticationType jwt,
+    databaseType sql,
+    prodDatabaseType postgresql,
+    clientFramework angular,
+    enableTranslation true,
+    messageBroker kafka,
+    searchEngine elasticsearch,
+    nativeLanguage en,    
+    languages [en],    
+    skipClient true,
+  }
+  entities *
+}
+
+entity Party {
+    name String required
+    email String required
+    gstNo String required
+    phone String required   
+    comments String
+    primaryType PartyPrimaryType required
+}
+enum PartyPrimaryType{
+    Employee, Vendor, Customer, Supplier, Guest, Other
+}
+entity PartyType{
+    name String    
+    comment String
+}
+entity PartyRole{
+    name String
+    permission String
+}
+
+entity Organisation {
+    name String required    
+    domain String
+    cname String
+}
+entity Company {
+    name String required
+    displayName String required
+    email String required
+    gstNo String required
+    phone String required    
+    website String
+    imageSrc String 
+    gstType GstType
+    currencyType CurrencyType  
+    geoLocation String 
+}
+
+entity Address{
+    addressLine1 String required
+    addressLine2 String
+    localState String required
+    city String required
+    country String required
+    postalCode String required
+    addressType AddressType
+}
+enum AddressType{
+    Primary, Secondary, Shipping, Billing
+}
+
+enum GstType{
+    CGST_SGST,IGST
+}
+enum CurrencyType{
+    INR("₹ - INR"),
+    USD("$ - USD")
+}
+
+entity Facility{
+    name String required        
+    geoLocation String
+}
+
+entity Asset{
+    name String required
+    code String required
+    assetType AssetType
+    assetOwnership AssetOwnership    
+    isEmpty Boolean   
+    maxCapacity Long
+    maxCapacityMeasurement MeasurementUnit
+    maxRunningTime Long
+    maxRunningTimeMeasurement MeasurementTime    
+}
+entity AssetPurchase{
+    purchaseDate Instant required
+    amount Long
+    paymentDate Instant required
+    paymentMethod PaymentMethod
+    paymentReference String   
+    paymentStatus PaymentStatus 
+}
+entity AssetMaintenance{
+    serviceRunningTime Long
+    serviceRunningTimeMeasurement MeasurementTime
+    restIntervalTime Long
+    restIntervalTimeMeasurement MeasurementTime
+    nextServiceDate Instant
+}
+entity AssetServiceHistory{
+    serviceDate Instant required
+    isPaid Boolean
+    serviceAmount Long    
+}
+
+entity AssetItem{
+    name String required
+    assetItemCapacity AssetItemCapacity
+    weight Long
+}
+
+entity AssetItemType{
+    name String required
+    code String        
+}
+
+enum AssetItemCapacity{
+    Empty, Quarter, Half, Full
+}
+entity AssetCategory{
+    name String required
+    description String
+}
+
+enum AssetType{
+    Moveable, Fixed
+}
+enum AssetOwnership{
+    Own, Lended, Shared
+}
+
+enum BillStatus {
+    New, Saved, Draft, Issued
+}
+enum OrderStatus {
+    COMPLETED, PAID, PENDING, CANCELLED, REFUNDED
+}
+enum PaymentMethod {
+    AccountTransfer, Cash
+}
+enum PaymentStatus{
+    Pending,Approved, PartialPaid, Instalment, Paid, Accepted, Completed, Refunded
+}
+entity Order {
+    placedDate Instant required
+    status OrderStatus required
+    cgst BigDecimal required min(0)
+    sgst BigDecimal required min(0)
+    totalPrice BigDecimal required min(0)
+    paymentMethod PaymentMethod required
+    paymentReference String
+    billingStatus BillStatus
+}
+
+entity OrderItem {
+    unitPrice Integer required min(0)
+    quantity Integer required min(0)
+    totalPrice BigDecimal required min(0)
+}
+
+entity Product {
+    name String required
+    description String
+    price BigDecimal required min(0)    
+    image ImageBlob
+    measurement ProductMeasurementType
+    measurementUnit MeasurementUnit   
+    discountAmount Long
+    discountPercentage Integer min(0) max(100)
+}
+
+entity Catalog {
+    name String required
+    active Boolean
+    activeOn Instant
+    createdDate Instant
+}
+
+entity ProductBranding{
+    name String required
+    description String
+    price BigDecimal required min(0)    
+    imageSrc String
+    measurement ProductMeasurementType
+    measurementUnit MeasurementUnit
+    discountAmount Long
+    discountPercentage Integer min(0) max(100)
+}
+entity ProductVariation{
+    name String required
+    description String
+    price BigDecimal required min(0)    
+    imageSrc String
+    measurement ProductMeasurementType
+    measurementUnit MeasurementUnit
+    discountAmount Long
+    discountPercentage Integer min(0) max(100)
+}
+
+entity ProductVariationBranding{
+    name String required
+    description String
+    price BigDecimal required min(0)    
+    imageSrc String
+    measurement ProductMeasurementType
+    measurementUnit MeasurementUnit
+    discountAmount Long
+    discountPercentage Integer min(0) max(100) 
+}
+
+entity ProductAttributes{
+    name String required
+    value String required
+    comments String    
+    hidden Boolean
+    internal Boolean
+}
+
+entity Tax{
+    name String
+    percentage Integer min(0) max(100)
+    taxationAuthority TaxationAuthority
+}
+entity TaxSplit{
+    name String required    
+    percentage Integer min(0) max(100)
+}
+enum TaxationAuthority{
+    IND, US
+}
+enum ProductMeasurementType{ 
+     Weight, Size, Litter, Count
+}
+
+enum MeasurementUnit{
+     Gram, Kilogram, Litter, Milli_litter, No, S, M, L, XL, XXL
+}
+enum MeasurementTime{
+    Seconds, Minutes, Hours, Days, Months, Years
+}
+entity ProductCategory {
+    name String required
+    description String    
+}
+
+relationship OneToOne {            
+    Order{company required} to Company
+    Order{user(login) required} to User
+    Asset{assetItem} to AssetItem
+    AssetServiceHistory{vendor} to Party
+    AssetPurchase{vendor} to Party
+    Asset{maintenance} to AssetMaintenance
+    Asset{purchase} to AssetPurchase
+    Catalog{company} to Company
+    Catalog{user(login) required} to User
+    Product{createdBy} to Company
+    ProductBranding{company} to Company
+}
+
+relationship ManyToOne {
+    Company{orgnisation(name) required} to Organisation
+    OrderItem{product(name) required} to Product
+    Facility{company(name) required} to Company
+    Asset{facility(name) required} to Facility
+    Facility{user(login) required} to User
+    Company{parent} to Company       
+    AssetItem{assetItemType} to AssetItemType
+    ProductCategory{parentCategory(name)} to ProductCategory        
+    Organisation{user(login) required} to User
+    Company{user(login) required} to User     
+    ProductBranding{product} to Product
+    Product{tax} to Tax
+    ProductVariation{product} to Product
+    ProductVariation{tax} to Tax
+    ProductVariationBranding{productVariation} to ProductVariation
+    ProductVariationBranding{tax} to Tax
+}
+relationship OneToMany {
+    Party{order} to Order{party required}
+    Order{orderItem} to OrderItem{order required}
+    ProductCategory{product} to Product{productCategory(name) required}        
+    Party{address} to Address{party}
+    Company{address} to Address{company}
+    Facility{address} to Address{facility}    
+    Tax{split} to TaxSplit{tax}  
+    Product{attributes} to ProductAttributes      
+    ProductBranding{attributes} to ProductAttributes      
+    ProductVariation{attributes} to ProductAttributes      
+    ProductVariationBranding{attributes} to ProductAttributes      
+}
+
+relationship ManyToMany {
+  Asset{assetCategory} to AssetCategory{asset}
+}
+
+service * with serviceClass
+paginate Product, Party, ProductCategory with pagination    

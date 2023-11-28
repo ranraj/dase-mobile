@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Company</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{company.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{company.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Display Name</ion-label>
+      <div item-content>
+        <span id="displayName-content">{{company.displayName}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Email</ion-label>
+      <div item-content>
+        <span id="email-content">{{company.email}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Gst No</ion-label>
+      <div item-content>
+        <span id="gstNo-content">{{company.gstNo}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Phone</ion-label>
+      <div item-content>
+        <span id="phone-content">{{company.phone}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Website</ion-label>
+      <div item-content>
+        <span id="website-content">{{company.website}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Image Src</ion-label>
+      <div item-content>
+        <span id="imageSrc-content">{{company.imageSrc}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Gst Type</ion-label>
+      <div item-content>
+        <span id="gstType-content">{{company.gstType}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Currency Type</ion-label>
+      <div item-content>
+        <span id="currencyType-content">{{company.currencyType}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Geo Location</ion-label>
+      <div item-content>
+        <span id="geoLocation-content">{{company.geoLocation}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Orgnisation</ion-label>
+      <div item-content *ngIf="company.orgnisation">
+        <a>{{company.orgnisation?.name}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Parent</ion-label>
+      <div item-content *ngIf="company.parent">
+        <a>{{company.parent?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>User</ion-label>
+      <div item-content>{{company.user?.login}}</div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(company)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(company)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

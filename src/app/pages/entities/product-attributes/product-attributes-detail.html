@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Attributes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{productAttributes.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{productAttributes.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Value</ion-label>
+      <div item-content>
+        <span id="value-content">{{productAttributes.value}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Comments</ion-label>
+      <div item-content>
+        <span id="comments-content">{{productAttributes.comments}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Hidden</ion-label>
+      <div item-content>
+        <span id="hidden-content">{{productAttributes.hidden}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Internal</ion-label>
+      <div item-content>
+        <span id="internal-content">{{productAttributes.internal}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Product</ion-label>
+      <div item-content *ngIf="productAttributes.product">
+        <a>{{productAttributes.product?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Product Branding</ion-label>
+      <div item-content *ngIf="productAttributes.productBranding">
+        <a>{{productAttributes.productBranding?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Product Variation</ion-label>
+      <div item-content *ngIf="productAttributes.productVariation">
+        <a>{{productAttributes.productVariation?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Product Variation Branding</ion-label>
+      <div item-content *ngIf="productAttributes.productVariationBranding">
+        <a>{{productAttributes.productVariationBranding?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(productAttributes)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(productAttributes)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

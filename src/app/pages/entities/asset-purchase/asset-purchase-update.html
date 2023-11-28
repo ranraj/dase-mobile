@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset Purchase</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Purchase Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="purchaseDate" id="field_purchaseDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Amount</ion-label>
+        <ion-input type="number" name="amount" formControlName="amount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="paymentDate" id="field_paymentDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment Method</ion-label>
+        <ion-select formControlName="paymentMethod" id="field_paymentMethod">
+          <ion-select-option value="AccountTransfer">{{'PaymentMethod.AccountTransfer' | translate}}</ion-select-option>
+          <ion-select-option value="Cash">{{'PaymentMethod.Cash' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Payment Reference</ion-label>
+        <ion-input type="text" name="paymentReference" formControlName="paymentReference"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment Status</ion-label>
+        <ion-select formControlName="paymentStatus" id="field_paymentStatus">
+          <ion-select-option value="Pending">{{'PaymentStatus.Pending' | translate}}</ion-select-option>
+          <ion-select-option value="Approved">{{'PaymentStatus.Approved' | translate}}</ion-select-option>
+          <ion-select-option value="PartialPaid">{{'PaymentStatus.PartialPaid' | translate}}</ion-select-option>
+          <ion-select-option value="Instalment">{{'PaymentStatus.Instalment' | translate}}</ion-select-option>
+          <ion-select-option value="Paid">{{'PaymentStatus.Paid' | translate}}</ion-select-option>
+          <ion-select-option value="Accepted">{{'PaymentStatus.Accepted' | translate}}</ion-select-option>
+          <ion-select-option value="Completed">{{'PaymentStatus.Completed' | translate}}</ion-select-option>
+          <ion-select-option value="Refunded">{{'PaymentStatus.Refunded' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Vendor</ion-label>
+        <ion-select id="field_vendor" formControlName="vendor" [compareWith]="compareParty">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="partyOption.id === assetPurchase.vendor?.id ? assetPurchase.vendor : partyOption"
+            *ngFor="let partyOption of vendors; trackBy: trackPartyById"
+            >{{partyOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

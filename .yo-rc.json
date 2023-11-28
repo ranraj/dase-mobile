@@ -1,0 +1,26 @@
+{
+  "generator-jhipster": {
+    "authenticationType": "jwt",
+    "baseName": "daseappIonic",
+    "blueprints": [
+      {
+        "name": "generator-jhipster-ionic",
+        "version": "8.1.0"
+      }
+    ],
+    "enableTranslation": true,
+    "jhipsterVersion": "7.9.3",
+    "otherModules": [
+      {
+        "name": "generator-jhipster-ionic",
+        "version": "8.1.0"
+      }
+    ],
+    "prettierDefaultIndent": 2,
+    "projectName": "DaseappIonic"
+  },
+  "generator-jhipster-ionic": {
+    "appDir": "../dase-service",
+    "ionicDir": null
+  }
+}

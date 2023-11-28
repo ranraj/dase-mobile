@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Variation Branding</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{productVariationBranding.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{productVariationBranding.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Description</ion-label>
+      <div item-content>
+        <span id="description-content">{{productVariationBranding.description}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Price</ion-label>
+      <div item-content>
+        <span id="price-content">{{productVariationBranding.price}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Image Src</ion-label>
+      <div item-content>
+        <span id="imageSrc-content">{{productVariationBranding.imageSrc}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Measurement</ion-label>
+      <div item-content>
+        <span id="measurement-content">{{productVariationBranding.measurement}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Measurement Unit</ion-label>
+      <div item-content>
+        <span id="measurementUnit-content">{{productVariationBranding.measurementUnit}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Discount Amount</ion-label>
+      <div item-content>
+        <span id="discountAmount-content">{{productVariationBranding.discountAmount}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Discount Percentage</ion-label>
+      <div item-content>
+        <span id="discountPercentage-content">{{productVariationBranding.discountPercentage}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Product Variation</ion-label>
+      <div item-content *ngIf="productVariationBranding.productVariation">
+        <a>{{productVariationBranding.productVariation?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tax</ion-label>
+      <div item-content *ngIf="productVariationBranding.tax">
+        <a>{{productVariationBranding.tax?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(productVariationBranding)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(productVariationBranding)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

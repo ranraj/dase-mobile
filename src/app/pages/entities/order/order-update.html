@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Placed Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="placedDate" id="field_placedDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select formControlName="status" id="field_status" required>
+          <ion-select-option value="COMPLETED">{{'OrderStatus.COMPLETED' | translate}}</ion-select-option>
+          <ion-select-option value="PAID">{{'OrderStatus.PAID' | translate}}</ion-select-option>
+          <ion-select-option value="PENDING">{{'OrderStatus.PENDING' | translate}}</ion-select-option>
+          <ion-select-option value="CANCELLED">{{'OrderStatus.CANCELLED' | translate}}</ion-select-option>
+          <ion-select-option value="REFUNDED">{{'OrderStatus.REFUNDED' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cgst</ion-label>
+        <ion-input type="number" name="cgst" formControlName="cgst"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Sgst</ion-label>
+        <ion-input type="number" name="sgst" formControlName="sgst"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Total Price</ion-label>
+        <ion-input type="number" name="totalPrice" formControlName="totalPrice"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment Method</ion-label>
+        <ion-select formControlName="paymentMethod" id="field_paymentMethod" required>
+          <ion-select-option value="AccountTransfer">{{'PaymentMethod.AccountTransfer' | translate}}</ion-select-option>
+          <ion-select-option value="Cash">{{'PaymentMethod.Cash' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Payment Reference</ion-label>
+        <ion-input type="text" name="paymentReference" formControlName="paymentReference"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Billing Status</ion-label>
+        <ion-select formControlName="billingStatus" id="field_billingStatus">
+          <ion-select-option value="New">{{'BillStatus.New' | translate}}</ion-select-option>
+          <ion-select-option value="Saved">{{'BillStatus.Saved' | translate}}</ion-select-option>
+          <ion-select-option value="Draft">{{'BillStatus.Draft' | translate}}</ion-select-option>
+          <ion-select-option value="Issued">{{'BillStatus.Issued' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Company</ion-label>
+        <ion-select id="field_company" formControlName="company" [compareWith]="compareCompany" required>
+          <ion-select-option *ngIf="!form.value.company" [value]="null" selected></ion-select-option>
+          <ion-select-option
+            [value]="companyOption.id === order.company?.id ? order.company : companyOption"
+            *ngFor="let companyOption of companies; trackBy: trackCompanyById"
+            >{{companyOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
+        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      </div>
+      <ion-item>
+        <ion-label>User</ion-label>
+        <ion-select id="field_user" formControlName="user" [compareWith]="compareUser" required>
+          <ion-select-option *ngIf="!form.value.user" [value]="null" selected></ion-select-option>
+          <ion-select-option [value]="userOption" *ngFor="let userOption of users; trackBy: trackUserById"
+            >{{userOption.login}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
+        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      </div>
+      <ion-item>
+        <ion-label>Party</ion-label>
+        <ion-select id="field_party" formControlName="party" [compareWith]="compareParty" required>
+          <ion-select-option *ngIf="!form.value.party" [value]="null" selected></ion-select-option>
+          <ion-select-option [value]="partyOption" *ngFor="let partyOption of parties; trackBy: trackPartyById"
+            >{{partyOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
+        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

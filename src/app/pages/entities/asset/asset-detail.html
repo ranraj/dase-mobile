@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{asset.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{asset.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Code</ion-label>
+      <div item-content>
+        <span id="code-content">{{asset.code}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Asset Type</ion-label>
+      <div item-content>
+        <span id="assetType-content">{{asset.assetType}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Asset Ownership</ion-label>
+      <div item-content>
+        <span id="assetOwnership-content">{{asset.assetOwnership}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Is Empty</ion-label>
+      <div item-content>
+        <span id="isEmpty-content">{{asset.isEmpty}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Max Capacity</ion-label>
+      <div item-content>
+        <span id="maxCapacity-content">{{asset.maxCapacity}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Max Capacity Measurement</ion-label>
+      <div item-content>
+        <span id="maxCapacityMeasurement-content">{{asset.maxCapacityMeasurement}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Max Running Time</ion-label>
+      <div item-content>
+        <span id="maxRunningTime-content">{{asset.maxRunningTime}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Max Running Time Measurement</ion-label>
+      <div item-content>
+        <span id="maxRunningTimeMeasurement-content">{{asset.maxRunningTimeMeasurement}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Asset Item</ion-label>
+      <div item-content *ngIf="asset.assetItem">
+        <a>{{asset.assetItem?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Maintenance</ion-label>
+      <div item-content *ngIf="asset.maintenance">
+        <a>{{asset.maintenance?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Purchase</ion-label>
+      <div item-content *ngIf="asset.purchase">
+        <a>{{asset.purchase?.id}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Facility</ion-label>
+      <div item-content *ngIf="asset.facility">
+        <a>{{asset.facility?.name}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Asset Category</ion-label>
+      <div item-content>
+        <span *ngFor="let assetCategory of asset.assetCategories; let last = last"> <a>{{assetCategory.id}}</a>{{last ? '' : ', '}} </span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(asset)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(asset)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

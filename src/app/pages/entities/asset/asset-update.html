@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" name="name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Code</ion-label>
+        <ion-input type="text" name="code" formControlName="code"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asset Type</ion-label>
+        <ion-select formControlName="assetType" id="field_assetType">
+          <ion-select-option value="Moveable">{{'AssetType.Moveable' | translate}}</ion-select-option>
+          <ion-select-option value="Fixed">{{'AssetType.Fixed' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asset Ownership</ion-label>
+        <ion-select formControlName="assetOwnership" id="field_assetOwnership">
+          <ion-select-option value="Own">{{'AssetOwnership.Own' | translate}}</ion-select-option>
+          <ion-select-option value="Lended">{{'AssetOwnership.Lended' | translate}}</ion-select-option>
+          <ion-select-option value="Shared">{{'AssetOwnership.Shared' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Is Empty</ion-label>
+        <ion-checkbox formControlName="isEmpty"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Max Capacity</ion-label>
+        <ion-input type="number" name="maxCapacity" formControlName="maxCapacity"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Max Capacity Measurement</ion-label>
+        <ion-select formControlName="maxCapacityMeasurement" id="field_maxCapacityMeasurement">
+          <ion-select-option value="Gram">{{'MeasurementUnit.Gram' | translate}}</ion-select-option>
+          <ion-select-option value="Kilogram">{{'MeasurementUnit.Kilogram' | translate}}</ion-select-option>
+          <ion-select-option value="Litter">{{'MeasurementUnit.Litter' | translate}}</ion-select-option>
+          <ion-select-option value="Milli_litter">{{'MeasurementUnit.Milli_litter' | translate}}</ion-select-option>
+          <ion-select-option value="No">{{'MeasurementUnit.No' | translate}}</ion-select-option>
+          <ion-select-option value="S">{{'MeasurementUnit.S' | translate}}</ion-select-option>
+          <ion-select-option value="M">{{'MeasurementUnit.M' | translate}}</ion-select-option>
+          <ion-select-option value="L">{{'MeasurementUnit.L' | translate}}</ion-select-option>
+          <ion-select-option value="XL">{{'MeasurementUnit.XL' | translate}}</ion-select-option>
+          <ion-select-option value="XXL">{{'MeasurementUnit.XXL' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Max Running Time</ion-label>
+        <ion-input type="number" name="maxRunningTime" formControlName="maxRunningTime"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Max Running Time Measurement</ion-label>
+        <ion-select formControlName="maxRunningTimeMeasurement" id="field_maxRunningTimeMeasurement">
+          <ion-select-option value="Seconds">{{'MeasurementTime.Seconds' | translate}}</ion-select-option>
+          <ion-select-option value="Minutes">{{'MeasurementTime.Minutes' | translate}}</ion-select-option>
+          <ion-select-option value="Hours">{{'MeasurementTime.Hours' | translate}}</ion-select-option>
+          <ion-select-option value="Days">{{'MeasurementTime.Days' | translate}}</ion-select-option>
+          <ion-select-option value="Months">{{'MeasurementTime.Months' | translate}}</ion-select-option>
+          <ion-select-option value="Years">{{'MeasurementTime.Years' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asset Item</ion-label>
+        <ion-select id="field_assetItem" formControlName="assetItem" [compareWith]="compareAssetItem">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="assetItemOption.id === asset.assetItem?.id ? asset.assetItem : assetItemOption"
+            *ngFor="let assetItemOption of assetitems; trackBy: trackAssetItemById"
+            >{{assetItemOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Maintenance</ion-label>
+        <ion-select id="field_maintenance" formControlName="maintenance" [compareWith]="compareAssetMaintenance">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="assetMaintenanceOption.id === asset.maintenance?.id ? asset.maintenance : assetMaintenanceOption"
+            *ngFor="let assetMaintenanceOption of maintenances; trackBy: trackAssetMaintenanceById"
+            >{{assetMaintenanceOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Purchase</ion-label>
+        <ion-select id="field_purchase" formControlName="purchase" [compareWith]="compareAssetPurchase">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="assetPurchaseOption.id === asset.purchase?.id ? asset.purchase : assetPurchaseOption"
+            *ngFor="let assetPurchaseOption of purchases; trackBy: trackAssetPurchaseById"
+            >{{assetPurchaseOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Facility</ion-label>
+        <ion-select id="field_facility" formControlName="facility" [compareWith]="compareFacility" required>
+          <ion-select-option *ngIf="!form.value.facility" [value]="null" selected></ion-select-option>
+          <ion-select-option [value]="facilityOption" *ngFor="let facilityOption of facilities; trackBy: trackFacilityById"
+            >{{facilityOption.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
+        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      </div>
+      <ion-item>
+        <ion-label>Asset Category</ion-label>
+        <ion-select id="field_assetCategory" multiple="true" formControlName="assetCategories" [compareWith]="compareAssetCategory">
+          <ion-select-option
+            [value]="assetCategoryOption"
+            *ngFor="let assetCategoryOption of assetcategories; trackBy: trackAssetCategoryById"
+            >{{assetCategoryOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

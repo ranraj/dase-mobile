@@ -1,0 +1,7 @@
+{
+  "name": "daseappIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

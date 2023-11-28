@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asset Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{assetItem.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{assetItem.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Asset Item Capacity</ion-label>
+      <div item-content>
+        <span id="assetItemCapacity-content">{{assetItem.assetItemCapacity}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Weight</ion-label>
+      <div item-content>
+        <span id="weight-content">{{assetItem.weight}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Asset Item Type</ion-label>
+      <div item-content *ngIf="assetItem.assetItemType">
+        <a>{{assetItem.assetItemType?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(assetItem)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(assetItem)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>
