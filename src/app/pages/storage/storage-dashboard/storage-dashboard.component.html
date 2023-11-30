@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Storage Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <ion-label position="fixed">Assets</ion-label>
+              <a routerLink="/tabs/entities/asset">
+                <p class="card-text">{{assets.length}}</p>
+              </a>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-label position="fixed">Asset Items</ion-label>
+              <a routerLink="/tabs/entities/asset-item">
+                <p class="card-text">{{assetItems.length}}</p>
+              </a>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-label position="fixed">Item Types</ion-label>
+              <a routerLink="/tabs/entities/asset-item-type">
+                <p class="card-text">{{assetItemTypes.length}}</p>
+              </a>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div>
+              <div class="table-responsive" id="entities" *ngIf="inventory && inventory.length > 0">
+                <ion-label position="fixed">Inventory</ion-label>
+                <table class="table table-striped" aria-describedby="page-heading">
+                  <thead>
+                    <tr>
+                      <th scope="col">Item Type</th>
+                      <th scope="col">Weight</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of inventory" data-cy="entityTable">
+                      <td>
+                        <a [routerLink]="['/tabs/entities/asset-item-type', item.id, 'view']">{{ item.assetType }}</a>
+                      </td>
+                      <td>{{ item.itemWeightTotal }}</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>{{ inventoryTotal }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <ion-toolbar>
+    <ion-title> <a routerLink="/tabs/storage/explore">
+        Manage Storage
+      </a> </ion-title>
+  </ion-toolbar>
+
+</ion-content>

@@ -1,0 +1,13 @@
+{
+    "appId": "app.com",
+    "appName": "app",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "dist",
+    "server": {
+        "allowNavigation": []
+    },
+    "android": {
+        "allowMixedContent": true
+    }
+}

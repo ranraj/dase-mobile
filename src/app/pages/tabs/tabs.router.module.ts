@@ -8,6 +8,15 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'storage',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../storage/storage.module').then(m => m.StorageModule),
+          },
+        ],
+      },
+      {
         path: 'home',
         children: [
           {
@@ -52,4 +61,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

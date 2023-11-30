@@ -26,7 +26,7 @@ export class ProductUpdatePage implements OnInit {
   isSaving = false;
   isNew = true;
   isReadyToSave: boolean;
-
+  attachment = [];
   form = this.formBuilder.group({
     id: [null, []],
     name: [null, [Validators.required]],

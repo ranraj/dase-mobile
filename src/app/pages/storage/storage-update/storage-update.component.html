@@ -1,0 +1,163 @@
+<!-- <div class="row">
+  <div class="col-md-12 mb-4">
+    <div class="card mb-4">
+      <div class="card-header py-2">
+        <h5 class="mb-0" jhiTranslate="app.storage.search">Storage</h5>
+      </div>
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Asset Code"
+            aria-label="Asset coode"
+            autofocus
+            [(ngModel)]="currentSearch"
+            aria-describedby="basic-addon2"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (keypress)="search(currentSearch)" (click)="search(currentSearch)" type="button">
+              Search
+            </button>
+            <button class="btn btn-outline-secondary" [routerLink]="['/asset/new']" type="button">Add</button>
+          </div>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="save()" novalidate>
+          <div class="row mb-0">
+            <div class="col mb-4 col-xs-6">
+              <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+              <label class="form-label" jhiTranslate="daseappApp.assetItem.name" for="field_name">Name</label>
+              <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('name')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col mb-4 col-xs-6">
+              <input type="number" class="form-control" name="weight" id="field_weight" data-cy="weight" formControlName="weight" />
+              <label class="form-label" jhiTranslate="daseappApp.assetItem.weight" for="field_weight">Weight</label>
+            </div>
+          </div>
+          <div class="row mb-0">
+            <div class="col mb-4 col-xs-6">
+              <select
+                class="form-control"
+                name="assetItemCapacity"
+                formControlName="assetItemCapacity"
+                id="field_assetItemCapacity"
+                data-cy="assetItemCapacity"
+              >
+                <option [ngValue]="null">{{ 'daseappApp.AssetItemCapacity.null' | translate }}</option>
+                <option *ngFor="let assetItemCapacity of assetItemCapacityValues" [value]="assetItemCapacity">
+                  {{ 'daseappApp.AssetItemCapacity.' + assetItemCapacity | translate }}
+                </option>
+              </select>
+              <label class="form-label" jhiTranslate="daseappApp.assetItem.assetItemCapacity" for="field_assetItemCapacity"
+                >Asset Item Capacity</label
+              >
+            </div>
+            <div class="col mb-4 col-xs-6">
+              <select
+                class="form-control"
+                id="field_assetItemType"
+                data-cy="assetItemType"
+                name="assetItemType"
+                formControlName="assetItemType"
+              >
+                <option [ngValue]="null"></option>
+                <option
+                  [ngValue]="
+                    assetItemTypeOption.id === editForm.get('assetItemType')!.value?.id
+                      ? editForm.get('assetItemType')!.value
+                      : assetItemTypeOption
+                  "
+                  *ngFor="let assetItemTypeOption of assetItemTypesSharedCollection; trackBy: trackAssetItemTypeById"
+                >
+                  {{ assetItemTypeOption.name }}
+                </option>
+              </select>
+              <label class="form-label" jhiTranslate="daseappApp.assetItem.assetItemType" for="field_assetItemType">Asset Item Type</label>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="text-center">
+              <button type="submit" class="submit-btn btn btn-lg btn btn-outline-secondary" jhiTranslate="entity.action.save">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-button (click)="updateSearchResults()">Search</ion-button>
+    </ion-buttons>
+    <ion-title>Asset Item</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-searchbar [(ngModel)]="autocomplete.input" show-cancel-button="focus" placeholder="Search for a place">
+          </ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Asset Name</ion-label>
+        <ion-input type="text" name="assetName" formControlName="assetName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Asset Item Name</ion-label>
+        <ion-input type="text" name="name" formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Asset Item Capacity</ion-label>
+        <ion-select formControlName="assetItemCapacity" id="field_assetItemCapacity">
+          <ion-select-option value="Empty">{{'AssetItemCapacity.Empty' | translate}}</ion-select-option>
+          <ion-select-option value="Quarter">{{'AssetItemCapacity.Quarter' | translate}}</ion-select-option>
+          <ion-select-option value="Half">{{'AssetItemCapacity.Half' | translate}}</ion-select-option>
+          <ion-select-option value="Full">{{'AssetItemCapacity.Full' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Weight</ion-label>
+        <ion-input type="number" name="weight" formControlName="weight"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asset Item Type</ion-label>
+        <ion-select id="field_assetItemType" formControlName="assetItemType" [compareWith]="compareAssetItemType">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="assetItemTypeOption"
+            *ngFor="let assetItemTypeOption of assetItemTypes; trackBy: trackAssetItemTypeById">{{assetItemTypeOption.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

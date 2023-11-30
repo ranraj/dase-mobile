@@ -8,8 +8,8 @@ import { AssetItem } from './asset-item.model';
 @Injectable({ providedIn: 'root' })
 export class AssetItemService {
   private resourceUrl = ApiService.API_URL + '/asset-items';
-
-  constructor(protected http: HttpClient) {}
+  private searchUrl = ApiService.API_URL + "/_search/asset-items"
+  constructor(protected http: HttpClient) { }
 
   create(assetItem: AssetItem): Observable<HttpResponse<AssetItem>> {
     return this.http.post<AssetItem>(this.resourceUrl, assetItem, { observe: 'response' });
@@ -22,10 +22,12 @@ export class AssetItemService {
   find(id: number): Observable<HttpResponse<AssetItem>> {
     return this.http.get(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
-
   query(req?: any): Observable<HttpResponse<AssetItem[]>> {
     const options = createRequestOption(req);
-    return this.http.get<AssetItem[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<AssetItem[]>(this.resourceUrl, { params: req, observe: 'response' });
+  }
+  searchQuery(req?: any): Observable<HttpResponse<AssetItem[]>> {
+    return this.http.get<AssetItem[]>(this.searchUrl, { params: req, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<any>> {

@@ -8,8 +8,9 @@ import { Asset } from './asset.model';
 @Injectable({ providedIn: 'root' })
 export class AssetService {
   private resourceUrl = ApiService.API_URL + '/assets';
+  private searchUrl = ApiService.API_URL + "/_search/assets"
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
   create(asset: Asset): Observable<HttpResponse<Asset>> {
     return this.http.post<Asset>(this.resourceUrl, asset, { observe: 'response' });
@@ -26,6 +27,9 @@ export class AssetService {
   query(req?: any): Observable<HttpResponse<Asset[]>> {
     const options = createRequestOption(req);
     return this.http.get<Asset[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+  searchQuery(req?: any): Observable<HttpResponse<Asset[]>> {
+    return this.http.get<Asset[]>(this.searchUrl, { params: req, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<any>> {

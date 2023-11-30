@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { LoginService } from '../../services/login/login.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginPage implements OnInit {
     public loginService: LoginService,
     public toastController: ToastController,
     public navController: NavController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.translateService.get('LOGIN_ERROR').subscribe(value => {
@@ -37,11 +38,12 @@ export class LoginPage implements OnInit {
       () => {
         this.navController.navigateRoot('/tabs');
       },
-      async err => {
+      async (err: HttpErrorResponse) => {
         // Unable to log in
+
         this.account.password = '';
         const toast = await this.toastController.create({
-          message: this.loginErrorString,
+          message: JSON.stringify(err.error) + ", " + err.message + ", " + err.status,
           duration: 3000,
           position: 'top',
         });
