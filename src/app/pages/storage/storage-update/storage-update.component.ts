@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder as FormBuilder, Validators } from '@angular/forms';
-import { NavController, Platform, ToastController } from '@ionic/angular';
+import { UntypedFormBuilder as FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AlertController, NavController, Platform, ToastController } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AssetItemType, AssetItemTypeService } from '../../entities/asset-item-type';
 import { AssetItem, AssetItemService } from '../../entities/asset-item';
 import { Asset, AssetService } from '../../entities/asset';
+import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'jhi-storage-update',
@@ -22,6 +23,11 @@ export class StorageUpdateComponent implements OnInit {
   isReadyToSave: boolean;
   autocomplete: { input: string; };
 
+  // Barcode scanner
+  isSupported = false;
+  barcodes: Barcode[] = [];
+  showInstall = false;
+
   form = this.formBuilder.group({
     id: [null, []],
     assetName: [null, []],
@@ -29,6 +35,13 @@ export class StorageUpdateComponent implements OnInit {
     assetItemCapacity: [null, []],
     weight: [null, []],
     assetItemType: [null, []],
+  });
+
+  public formGroup = new UntypedFormGroup({
+    formats: new UntypedFormControl([]),
+    lensFacing: new UntypedFormControl(LensFacing.Back),
+    googleBarcodeScannerModuleInstallState: new UntypedFormControl(0),
+    googleBarcodeScannerModuleInstallProgress: new UntypedFormControl(0),
   });
 
   constructor(
@@ -39,13 +52,48 @@ export class StorageUpdateComponent implements OnInit {
     protected toastCtrl: ToastController,
     private assetItemTypeService: AssetItemTypeService,
     private assetItemService: AssetItemService,
-    private assetService: AssetService
+    private assetService: AssetService,
+    private alertController: AlertController
   ) {
     // Watch the form for changes, and
     this.form.valueChanges.subscribe(v => {
       this.isReadyToSave = this.form.valid;
     });
     this.autocomplete = { input: "" };
+  }
+
+  public toggleInstallButton() {
+    this.showInstall = !this.showInstall;
+  }
+
+  async scan(): Promise<void> {
+    const granted = await this.requestPermissions();
+    if (!granted) {
+      this.presentAlert();
+      return;
+    }
+    const { barcodes } = await BarcodeScanner.scan();
+    this.barcodes = barcodes;
+    if (barcodes && barcodes.length > 0) {
+      this.autocomplete.input = barcodes[0].rawValue;
+    }
+  }
+
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
+
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Permission denied',
+      message: 'Please grant camera permission to use the barcode scanner.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+  public async installGoogleBarcodeScannerModule(): Promise<void> {
+    await BarcodeScanner.installGoogleBarcodeScannerModule();
   }
 
   updateSearchResults() {
@@ -101,6 +149,9 @@ export class StorageUpdateComponent implements OnInit {
       if (this.assetItem) {
         this.updateForm();
       }
+    });
+    BarcodeScanner.isSupported().then((result) => {
+      this.isSupported = result.supported;
     });
   }
 
