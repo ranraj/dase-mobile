@@ -86,11 +86,8 @@
         <ion-label>Asset Item</ion-label>
         <ion-select id="field_assetItem" formControlName="assetItem" [compareWith]="compareAssetItem">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option
-            [value]="assetItemOption.id === asset.assetItem?.id ? asset.assetItem : assetItemOption"
-            *ngFor="let assetItemOption of assetitems; trackBy: trackAssetItemById"
-            >{{assetItemOption.id}}</ion-select-option
-          >
+          <ion-select-option [value]="assetItemOption.id === asset.assetItem?.id ? asset.assetItem : assetItemOption"
+            *ngFor="let assetItemOption of assetitems; trackBy: trackAssetItemById">{{assetItemOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -99,9 +96,7 @@
           <ion-select-option [value]="null"></ion-select-option>
           <ion-select-option
             [value]="assetMaintenanceOption.id === asset.maintenance?.id ? asset.maintenance : assetMaintenanceOption"
-            *ngFor="let assetMaintenanceOption of maintenances; trackBy: trackAssetMaintenanceById"
-            >{{assetMaintenanceOption.id}}</ion-select-option
-          >
+            *ngFor="let assetMaintenanceOption of maintenances; trackBy: trackAssetMaintenanceById">{{assetMaintenanceOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -110,31 +105,26 @@
           <ion-select-option [value]="null"></ion-select-option>
           <ion-select-option
             [value]="assetPurchaseOption.id === asset.purchase?.id ? asset.purchase : assetPurchaseOption"
-            *ngFor="let assetPurchaseOption of purchases; trackBy: trackAssetPurchaseById"
-            >{{assetPurchaseOption.id}}</ion-select-option
-          >
+            *ngFor="let assetPurchaseOption of purchases; trackBy: trackAssetPurchaseById">{{assetPurchaseOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Facility</ion-label>
         <ion-select id="field_facility" formControlName="facility" [compareWith]="compareFacility" required>
           <ion-select-option *ngIf="!form.value.facility" [value]="null" selected></ion-select-option>
-          <ion-select-option [value]="facilityOption" *ngFor="let facilityOption of facilities; trackBy: trackFacilityById"
-            >{{facilityOption.name}}</ion-select-option
-          >
+          <ion-select-option [value]="facilityOption"
+            *ngFor="let facilityOption of facilities; trackBy: trackFacilityById">{{facilityOption.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
       <ion-item>
         <ion-label>Asset Category</ion-label>
-        <ion-select id="field_assetCategory" multiple="true" formControlName="assetCategories" [compareWith]="compareAssetCategory">
-          <ion-select-option
-            [value]="assetCategoryOption"
-            *ngFor="let assetCategoryOption of assetcategories; trackBy: trackAssetCategoryById"
-            >{{assetCategoryOption.id}}</ion-select-option
-          >
+        <ion-select id="field_assetCategory" multiple="true" formControlName="assetCategories"
+          [compareWith]="compareAssetCategory">
+          <ion-select-option [value]="assetCategoryOption"
+            *ngFor="let assetCategoryOption of assetcategories; trackBy: trackAssetCategoryById">{{assetCategoryOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

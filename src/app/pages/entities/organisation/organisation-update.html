@@ -37,13 +37,12 @@
         <ion-label>User</ion-label>
         <ion-select id="field_user" formControlName="user" [compareWith]="compareUser" required>
           <ion-select-option *ngIf="!form.value.user" [value]="null" selected></ion-select-option>
-          <ion-select-option [value]="userOption" *ngFor="let userOption of users; trackBy: trackUserById"
-            >{{userOption.login}}</ion-select-option
-          >
+          <ion-select-option [value]="userOption"
+            *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
     </ion-list>
   </form>

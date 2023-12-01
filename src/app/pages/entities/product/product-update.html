@@ -35,12 +35,8 @@
       </ion-item>
       <ion-item>
         <div>
-          <img
-            [src]="'data:' + product.imageContentType + ';base64,' + product.image"
-            style="max-height: 100px"
-            *ngIf="product?.image"
-            alt="product image"
-          />
+          <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 100px"
+            *ngIf="product?.image" alt="product image" />
           <div *ngIf="product.image">
             <p>{{product.imageContentType}}, {{byteSize(product.image)}}</p>
             <ion-button color="danger" (click)="clearInputImage('image', 'imageContentType', 'fileImage')">
@@ -89,33 +85,29 @@
         <ion-label>Created By</ion-label>
         <ion-select id="field_createdBy" formControlName="createdBy" [compareWith]="compareCompany">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option
-            [value]="companyOption.id === product.createdBy?.id ? product.createdBy : companyOption"
-            *ngFor="let companyOption of createdbies; trackBy: trackCompanyById"
-            >{{companyOption.id}}</ion-select-option
-          >
+          <ion-select-option [value]="companyOption.id === product.createdBy?.id ? product.createdBy : companyOption"
+            *ngFor="let companyOption of createdbies; trackBy: trackCompanyById">{{companyOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Tax</ion-label>
         <ion-select id="field_tax" formControlName="tax" [compareWith]="compareTax">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option [value]="taxOption" *ngFor="let taxOption of taxes; trackBy: trackTaxById">{{taxOption.id}}</ion-select-option>
+          <ion-select-option [value]="taxOption"
+            *ngFor="let taxOption of taxes; trackBy: trackTaxById">{{taxOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Product Category</ion-label>
-        <ion-select id="field_productCategory" formControlName="productCategory" [compareWith]="compareProductCategory" required>
+        <ion-select id="field_productCategory" formControlName="productCategory" [compareWith]="compareProductCategory"
+          required>
           <ion-select-option *ngIf="!form.value.productCategory" [value]="null" selected></ion-select-option>
-          <ion-select-option
-            [value]="productCategoryOption"
-            *ngFor="let productCategoryOption of productCategories; trackBy: trackProductCategoryById"
-            >{{productCategoryOption.name}}</ion-select-option
-          >
+          <ion-select-option [value]="productCategoryOption"
+            *ngFor="let productCategoryOption of productCategories; trackBy: trackProductCategoryById">{{productCategoryOption.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
     </ion-list>
   </form>

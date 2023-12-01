@@ -37,25 +37,23 @@
         <ion-label>Product</ion-label>
         <ion-select id="field_product" formControlName="product" [compareWith]="compareProduct" required>
           <ion-select-option *ngIf="!form.value.product" [value]="null" selected></ion-select-option>
-          <ion-select-option [value]="productOption" *ngFor="let productOption of products; trackBy: trackProductById"
-            >{{productOption.name}}</ion-select-option
-          >
+          <ion-select-option [value]="productOption"
+            *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
       <ion-item>
         <ion-label>Order</ion-label>
         <ion-select id="field_order" formControlName="order" [compareWith]="compareOrder" required>
           <ion-select-option *ngIf="!form.value.order" [value]="null" selected></ion-select-option>
-          <ion-select-option [value]="orderOption" *ngFor="let orderOption of orders; trackBy: trackOrderById"
-            >{{orderOption.id}}</ion-select-option
-          >
+          <ion-select-option [value]="orderOption"
+            *ngFor="let orderOption of orders; trackBy: trackOrderById">{{orderOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
     </ion-list>
   </form>

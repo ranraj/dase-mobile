@@ -35,30 +35,27 @@
       </ion-item>
       <ion-item>
         <ion-label>Created Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="createdDate" id="field_createdDate"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="createdDate"
+          id="field_createdDate"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>Company</ion-label>
         <ion-select id="field_company" formControlName="company" [compareWith]="compareCompany">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option
-            [value]="companyOption.id === catalog.company?.id ? catalog.company : companyOption"
-            *ngFor="let companyOption of companies; trackBy: trackCompanyById"
-            >{{companyOption.id}}</ion-select-option
-          >
+          <ion-select-option [value]="companyOption.id === catalog.company?.id ? catalog.company : companyOption"
+            *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>User</ion-label>
         <ion-select id="field_user" formControlName="user" [compareWith]="compareUser" required>
           <ion-select-option *ngIf="!form.value.user" [value]="null" selected></ion-select-option>
-          <ion-select-option [value]="userOption" *ngFor="let userOption of users; trackBy: trackUserById"
-            >{{userOption.login}}</ion-select-option
-          >
+          <ion-select-option [value]="userOption"
+            *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <div [hidden]="!(form.controls.?.dirty && form.controls.?.invalid)">
-        <small [hidden]="!form.controls.?.errors?.required"> This field is required. </small>
+      <div [hidden]="!(form.controls?.dirty && form.controls?.invalid)">
+        <small [hidden]="!form.controls?.errors?.required"> This field is required. </small>
       </div>
     </ion-list>
   </form>
