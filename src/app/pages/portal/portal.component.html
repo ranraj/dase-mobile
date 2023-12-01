@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{ 'MR Nuts' | translate }} </ion-title>
+    <ion-buttons slot="end" *ngIf="!isAuthenticated()">
+      <ion-button expand="block" routerLink="/welcome" id="signIn">{{ 'LOGIN' | translate }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-img src="../../../assets/img/nuts_home_mrnuts.png" alt="MR nuts"></ion-img>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <ion-label>NUTS & SEEDS</ion-label>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-img src="../../../assets/img/nuts.png" alt="Nuts"></ion-img>
+                <ion-card-subtitle>Cashew, Almond</ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <ion-label>DRY FRUITS</ion-label>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-img src="../../../assets/img/dry_fruits.png" alt="MR nuts"></ion-img>
+                <ion-card-subtitle>Dates, Raisins</ion-card-subtitle>
+              </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <ion-label>SPICES, GHEE</ion-label>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-img src="../../../assets/img/spices.png" alt="MR nuts"></ion-img>
+                <ion-card-subtitle>Pepper, Cinnamon</ion-card-subtitle>
+              </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <ion-label>CANDY, BRITTLE</ion-label>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-img src="../../../assets/img/peanuts_sweets.png" alt="MR nuts"></ion-img>
+                <ion-card-subtitle>Cashew Brittle</ion-card-subtitle>
+              </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-label>LOCATE SHOPS</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -17,6 +17,15 @@ const routes: Routes = [
         ],
       },
       {
+        path: 'portal',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../portal/portal.module').then(m => m.PortalModule),
+          },
+        ],
+      },
+      {
         path: 'home',
         children: [
           {
@@ -45,14 +54,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/portal',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/portal',
     pathMatch: 'full',
   },
 ];
