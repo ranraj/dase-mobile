@@ -6,11 +6,12 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserRouteAccessService } from 'src/app/services/auth/user-route-access.service';
 import { EntitiesPage } from './entities.page';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: EntitiesPage,
+    component: MainMenuComponent,
     data: {
       authorities: ['ROLE_USER'],
     },
@@ -122,6 +123,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, RouterModule.forChild(routes), TranslateModule],
-  declarations: [EntitiesPage],
+  declarations: [EntitiesPage, MainMenuComponent],
 })
-export class EntitiesPageModule {}
+export class EntitiesPageModule { }
