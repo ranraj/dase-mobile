@@ -51,6 +51,12 @@
         <span id="primaryType-content">{{party.primaryType}}</span>
       </div>
     </ion-item>
+    <ion-item>
+      <ion-label>Company</ion-label>
+      <div item-content *ngIf="party.company">
+        <a>{{party.company?.id}}</a>
+      </div>
+    </ion-item>
   </ion-list>
 
   <ion-button expand="block" color="primary" (click)="open(party)">{{ 'EDIT_BUTTON' | translate }}</ion-button>

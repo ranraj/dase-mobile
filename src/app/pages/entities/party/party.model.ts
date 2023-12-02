@@ -1,5 +1,6 @@
 import { BaseEntity } from 'src/model/base-entity';
 import { Order } from '../order/order.model';
+import { Company } from '../company/company.model';
 import { Address } from '../address/address.model';
 
 export const enum PartyPrimaryType {
@@ -21,6 +22,7 @@ export class Party implements BaseEntity {
     public comments?: string,
     public primaryType?: PartyPrimaryType,
     public orders?: Order[],
+    public company?: Company,
     public addresses?: Address[]
   ) {}
 }

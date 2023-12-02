@@ -178,6 +178,7 @@ entity Product {
     measurementUnit MeasurementUnit   
     discountAmount Long
     discountPercentage Integer min(0) max(100)
+    weight Integer
 }
 
 entity Catalog {
@@ -285,6 +286,10 @@ relationship ManyToOne {
     ProductVariation{tax} to Tax
     ProductVariationBranding{productVariation} to ProductVariation
     ProductVariationBranding{tax} to Tax
+    Party{company} to Company
+    Address{party} to Party{address}
+    Address{company} to Company{address}
+    Address{facility} to Facility{address}
 }
 relationship OneToMany {
     Party{order} to Order{party required}

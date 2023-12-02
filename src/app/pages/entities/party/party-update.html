@@ -52,6 +52,15 @@
           <ion-select-option value="Other">{{'PartyPrimaryType.Other' | translate}}</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label>Company</ion-label>
+        <ion-select id="field_company" formControlName="company" [compareWith]="compareCompany">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById"
+            >{{companyOption.id}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
     </ion-list>
   </form>
 </ion-content>

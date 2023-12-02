@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Party } from './party.model';
 import { PartyService } from './party.service';
+import { Company, CompanyService } from '../company';
 
 @Component({
   selector: 'page-party-update',
@@ -13,6 +14,7 @@ import { PartyService } from './party.service';
 })
 export class PartyUpdatePage implements OnInit {
   party: Party;
+  companies: Company[];
   isSaving = false;
   isNew = true;
   isReadyToSave: boolean;
@@ -25,6 +27,7 @@ export class PartyUpdatePage implements OnInit {
     phone: [null, [Validators.required]],
     comments: [null, []],
     primaryType: [null, [Validators.required]],
+    company: [null, []],
   });
 
   constructor(
@@ -33,6 +36,7 @@ export class PartyUpdatePage implements OnInit {
     protected formBuilder: FormBuilder,
     public platform: Platform,
     protected toastCtrl: ToastController,
+    private companyService: CompanyService,
     private partyService: PartyService
   ) {
     // Watch the form for changes, and
@@ -42,6 +46,12 @@ export class PartyUpdatePage implements OnInit {
   }
 
   ngOnInit() {
+    this.companyService.query().subscribe(
+      data => {
+        this.companies = data.body;
+      },
+      error => this.onError(error)
+    );
     this.activatedRoute.data.subscribe(response => {
       this.party = response.data;
       this.isNew = this.party.id === null || this.party.id === undefined;
@@ -58,6 +68,7 @@ export class PartyUpdatePage implements OnInit {
       phone: party.phone,
       comments: party.comments,
       primaryType: party.primaryType,
+      company: party.company,
     });
   }
 
@@ -93,6 +104,14 @@ export class PartyUpdatePage implements OnInit {
     await toast.present();
   }
 
+  compareCompany(first: Company, second: Company): boolean {
+    return first && first.id && second && second.id ? first.id === second.id : first === second;
+  }
+
+  trackCompanyById(index: number, item: Company) {
+    return item.id;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<Party>>) {
     result.subscribe(
       (res: HttpResponse<Party>) => this.onSaveSuccess(res),
@@ -110,6 +129,7 @@ export class PartyUpdatePage implements OnInit {
       phone: this.form.get(['phone']).value,
       comments: this.form.get(['comments']).value,
       primaryType: this.form.get(['primaryType']).value,
+      company: this.form.get(['company']).value,
     };
   }
 }

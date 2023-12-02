@@ -26,7 +26,7 @@ export class ProductUpdatePage implements OnInit {
   isSaving = false;
   isNew = true;
   isReadyToSave: boolean;
-  attachment = [];
+
   form = this.formBuilder.group({
     id: [null, []],
     name: [null, [Validators.required]],
@@ -180,7 +180,7 @@ export class ProductUpdatePage implements OnInit {
         const contentType = meta.split(':')[1].split(';')[0].trim();
 
         const patchValue = { [fieldName]: imageData, [fieldName + 'ContentType']: contentType };
-        Object.assign(this.attachment, patchValue);
+        //Object.assign(this.attachment, patchValue);
         this.form.patchValue(patchValue);
       } catch (error) {
         console.log(error);
