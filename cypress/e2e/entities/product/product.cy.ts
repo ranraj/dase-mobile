@@ -102,6 +102,9 @@ describe('Product entity', () => {
       if (product.discountPercentage !== undefined && product.discountPercentage !== null) {
         productDetailPage.getDiscountPercentageContent().contains(product.discountPercentage);
       }
+      if (product.weight !== undefined && product.weight !== null) {
+        productDetailPage.getWeightContent().contains(product.weight);
+      }
       productDetailPage.edit();
 
       productUpdatePage.back();
@@ -185,6 +188,9 @@ describe('Product entity', () => {
       }
       if (productSample.discountPercentage !== undefined && productSample.discountPercentage !== null) {
         productUpdatePage.setDiscountPercentageInput(productSample.discountPercentage);
+      }
+      if (productSample.weight !== undefined && productSample.weight !== null) {
+        productUpdatePage.setWeightInput(productSample.weight);
       }
       productUpdatePage.save();
 

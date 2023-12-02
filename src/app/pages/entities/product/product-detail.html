@@ -69,6 +69,12 @@
       </div>
     </ion-item>
     <ion-item>
+      <ion-label position="fixed">Weight</ion-label>
+      <div item-content>
+        <span id="weight-content">{{product.weight}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
       <ion-label>Created By</ion-label>
       <div item-content *ngIf="product.createdBy">
         <a>{{product.createdBy?.id}}</a>

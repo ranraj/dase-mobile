@@ -95,7 +95,7 @@ entity Asset{
 }
 entity AssetPurchase{
     purchaseDate Instant required
-    amount Long
+    amount Double
     paymentDate Instant required
     paymentMethod PaymentMethod
     paymentReference String   
@@ -111,13 +111,13 @@ entity AssetMaintenance{
 entity AssetServiceHistory{
     serviceDate Instant required
     isPaid Boolean
-    serviceAmount Long    
+    serviceAmount Double    
 }
 
 entity AssetItem{
     name String required
     assetItemCapacity AssetItemCapacity
-    weight Long
+    weight Double
 }
 
 entity AssetItemType{
@@ -176,9 +176,9 @@ entity Product {
     image ImageBlob
     measurement ProductMeasurementType
     measurementUnit MeasurementUnit   
-    discountAmount Long
+    discountAmount Double
     discountPercentage Integer min(0) max(100)
-    weight Integer
+    weight Double
 }
 
 entity Catalog {
@@ -195,7 +195,7 @@ entity ProductBranding{
     imageSrc String
     measurement ProductMeasurementType
     measurementUnit MeasurementUnit
-    discountAmount Long
+    discountAmount Double
     discountPercentage Integer min(0) max(100)
 }
 entity ProductVariation{
@@ -205,7 +205,7 @@ entity ProductVariation{
     imageSrc String
     measurement ProductMeasurementType
     measurementUnit MeasurementUnit
-    discountAmount Long
+    discountAmount Double
     discountPercentage Integer min(0) max(100)
 }
 
@@ -216,7 +216,7 @@ entity ProductVariationBranding{
     imageSrc String
     measurement ProductMeasurementType
     measurementUnit MeasurementUnit
-    discountAmount Long
+    discountAmount Double
     discountPercentage Integer min(0) max(100) 
 }
 
@@ -294,10 +294,7 @@ relationship ManyToOne {
 relationship OneToMany {
     Party{order} to Order{party required}
     Order{orderItem} to OrderItem{order required}
-    ProductCategory{product} to Product{productCategory(name) required}        
-    Party{address} to Address{party}
-    Company{address} to Address{company}
-    Facility{address} to Address{facility}    
+    ProductCategory{product} to Product{productCategory(name) required}                
     Tax{split} to TaxSplit{tax}  
     Product{attributes} to ProductAttributes      
     ProductBranding{attributes} to ProductAttributes      

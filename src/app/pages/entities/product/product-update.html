@@ -82,6 +82,10 @@
         <ion-input type="number" name="discountPercentage" formControlName="discountPercentage"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-label position="floating">Weight</ion-label>
+        <ion-input type="number" name="weight" formControlName="weight"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label>Created By</ion-label>
         <ion-select id="field_createdBy" formControlName="createdBy" [compareWith]="compareCompany">
           <ion-select-option [value]="null"></ion-select-option>

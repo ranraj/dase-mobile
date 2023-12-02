@@ -36,6 +36,7 @@ export class Product implements BaseEntity {
     public measurementUnit?: MeasurementUnit,
     public discountAmount?: number,
     public discountPercentage?: number,
+    public weight?: number,
     public createdBy?: Company,
     public attributes?: ProductAttributes[],
     public tax?: Tax,

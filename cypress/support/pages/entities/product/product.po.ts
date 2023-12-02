@@ -38,6 +38,10 @@ export class ProductUpdatePage extends EntityUpdatePage {
   setDiscountPercentageInput(discountPercentage: string) {
     this.setInputValue('discountPercentage', discountPercentage);
   }
+
+  setWeightInput(weight: string) {
+    this.setInputValue('weight', weight);
+  }
 }
 
 export class ProductDetailPage extends EntityDetailPage {
@@ -73,5 +77,9 @@ export class ProductDetailPage extends EntityDetailPage {
 
   getDiscountPercentageContent() {
     return cy.get('#discountPercentage-content');
+  }
+
+  getWeightContent() {
+    return cy.get('#weight-content');
   }
 }

@@ -38,6 +38,7 @@ export class ProductUpdatePage implements OnInit {
     measurementUnit: [null, []],
     discountAmount: [null, []],
     discountPercentage: [null, []],
+    weight: [null, []],
     createdBy: [null, []],
     tax: [null, []],
     productCategory: [null, [Validators.required]],
@@ -119,6 +120,7 @@ export class ProductUpdatePage implements OnInit {
       measurementUnit: product.measurementUnit,
       discountAmount: product.discountAmount,
       discountPercentage: product.discountPercentage,
+      weight: product.weight,
       createdBy: product.createdBy,
       tax: product.tax,
       productCategory: product.productCategory,
@@ -180,7 +182,7 @@ export class ProductUpdatePage implements OnInit {
         const contentType = meta.split(':')[1].split(';')[0].trim();
 
         const patchValue = { [fieldName]: imageData, [fieldName + 'ContentType']: contentType };
-        //Object.assign(this.attachment, patchValue);
+        // Object.assign(this.attachment, patchValue);
         this.form.patchValue(patchValue);
       } catch (error) {
         console.log(error);
@@ -241,6 +243,7 @@ export class ProductUpdatePage implements OnInit {
       measurementUnit: this.form.get(['measurementUnit']).value,
       discountAmount: this.form.get(['discountAmount']).value,
       discountPercentage: this.form.get(['discountPercentage']).value,
+      weight: this.form.get(['weight']).value,
       createdBy: this.form.get(['createdBy']).value,
       tax: this.form.get(['tax']).value,
       productCategory: this.form.get(['productCategory']).value,
